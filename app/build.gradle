@@ -31,12 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    testOptions{
-        unitTests.returnDefaultValues = true
-    }
-    sourceSets {
-        test.java.srcDirs += 'src/test/kotlin'
-    }
+//    testOptions{
+//        unitTests.returnDefaultValues = true
+//    }
+//    sourceSets {
+//        test.java.srcDirs += 'src/test/kotlin'
+//    }
 }
 
 dependencies {
@@ -55,13 +55,20 @@ dependencies {
     // Optional -- Robolectric environment
     testImplementation 'androidx.test:core:1.3.0'
     // Optional -- Mockito framework
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+    // required if you want to use Mockito for unit tests
+
+    testImplementation 'org.mockito:mockito-core:2.24.5'
 
     testImplementation "org.assertj:assertj-core:3.10.0"
     testImplementation 'io.mockk:mockk:1.8.5'
     // should already be here
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // ... more entries
 
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+    // Robolectric is a testing framework which let you test the android framework components(activity, service etc) with any emulator.
+    // It's gives you control over the life cycle of components to test as well.
     testImplementation 'org.robolectric:robolectric:4.4'
 }

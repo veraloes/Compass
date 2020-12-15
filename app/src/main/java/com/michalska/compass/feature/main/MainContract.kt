@@ -1,6 +1,7 @@
 package com.michalska.compass.feature.main
 
 import android.app.Activity
+import android.widget.EditText
 import com.michalska.compass.base.BasePresenterInterface
 
 interface MainContract {
@@ -28,8 +29,8 @@ interface MainContract {
             grantResults: IntArray
         )
 
-        fun setLongitude()
-        fun setLatitude()
+        fun setLongitude(text1: EditText)
+        fun setLatitude(text2: EditText)
         fun handleButtonClick()
         fun handleSaveButtonClick()
     }

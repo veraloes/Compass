@@ -2,8 +2,8 @@
     <string name="app_name">Compass</string>
     <string name="latitude">latitude</string>
     <string name="longitude">longitude</string>
-    <string name="permissionsLatitudeNeeded">Permissions are needed \n to show latitude\n (click here for more info)</string>
-    <string name="permissionsLongitudeNeeded">Permissions are needed \n to show longitude\n (click here for more info)</string>
+    <string name="permissionsLatitudeNeeded">Permissions are needed</string>
+    <string name="permissionsLongitudeNeeded">Permissions are needed</string>
     <string name="set_destination_button">set destination coordinates</string>
     <string name="longitude_error">Write correct longitude</string>
     <string name="latitude_error">Write correct latitude</string>

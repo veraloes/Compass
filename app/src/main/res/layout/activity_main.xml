@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".feature.main.MainActivity">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -110,10 +109,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
-            android:autofillHints="21.3"
             android:fontFamily="@font/armata"
+            android:hint="43.224"
             android:inputType="numberDecimal"
-            android:text="@string/longitude"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="16sp" />
@@ -124,10 +122,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:autofillHints="52.3"
             android:fontFamily="@font/armata"
+            android:hint="52.377"
             android:inputType="numberDecimal"
-            android:text="@string/latitude"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="16sp" />

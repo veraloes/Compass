@@ -8,12 +8,13 @@ import androidx.core.content.ContextCompat
 import com.michalska.compass.R
 import com.michalska.compass.base.BasePresenter
 
+
 class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
     private var longitude: EditText? = null
     private var latitude: EditText? = null
-    var currentLatitude: Float = 0f
-    var currentLongitude: Float = 0f
+    private var currentLatitude: Float = 0f
+    private var currentLongitude: Float = 0f
 
     override fun locationChanged(latitude: String, longitude: String) {
         currentLatitude = latitude.toFloat()
@@ -63,11 +64,13 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
         }
     }
 
-    override fun setLongitude() {
+    override fun setLongitude(text1: EditText) {
+        this.longitude = text1
         validateLongitude()
     }
 
-    override fun setLatitude() {
+    override fun setLatitude(text2: EditText) {
+        this.longitude = text2
         validateLatitude()
     }
 
@@ -81,7 +84,7 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
 
     private fun validateLongitude(): Boolean {
         // TODO: 14/12/2020 function has to be change to check correctness of inputed value
-        return if (longitude == null) {
+        return if (longitude?.text.toString().isEmpty()) {
             getScreen()?.invalidLongitude()
             false
         } else {
@@ -92,7 +95,7 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
 
     private fun validateLatitude(): Boolean {
         // TODO: 14/12/2020 function has to be change to check correctness of inputed value
-        return if (latitude == null) {
+        return if (latitude?.text.toString().isEmpty()) {
             getScreen()?.invalidLatitude()
             false
         } else {

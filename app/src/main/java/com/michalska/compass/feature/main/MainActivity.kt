@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.RotateAnimation
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -40,8 +41,8 @@ class MainActivity : AppCompatActivity(),
 
         presenter.requestPermission()
         this.sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager?
-        longitude_edit_text.addTextChangedListener { presenter.setLongitude() }
-        latitude_edit_text.addTextChangedListener { presenter.setLatitude() }
+        longitude_edit_text.addTextChangedListener { presenter.setLongitude(text1 = EditText(this)) }
+        latitude_edit_text.addTextChangedListener { presenter.setLatitude(text2 = EditText(this)) }
 
         set_coordiantes_button.setOnClickListener {
             presenter.handleButtonClick()
@@ -80,8 +81,8 @@ class MainActivity : AppCompatActivity(),
         )
         set_coordinates_layout.startAnimation(animationUp)
         set_coordiantes_button.startAnimation(animationUp)
-        set_coordiantes_button.isClickable = false
 
+        set_coordiantes_button.isClickable = false
         imageView.isVisible = true
 
         save_coordinates_button.setOnClickListener {
@@ -94,8 +95,7 @@ class MainActivity : AppCompatActivity(),
         latitude_edit_text.isVisible = false
         save_coordinates_button.isVisible = false
         set_coordinates_layout.isVisible = true
-        progressBar.isVisible = true
-        // TODO: 14/12/2020
+        progressBar.isVisible = true        // TODO: 14/12/2020
         //  Need check correctness of inputed longitude and latitude values.
         //  App ends here, because upload inputed coordinates and load destination direction and number of meters are not implemented.
     }
@@ -138,7 +138,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun showUpdatedLocation(latitude: String, longitude: String) {
-        TODO("Not yet implemented")
     }
 
     @SuppressLint("MissingPermission")
@@ -157,6 +156,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onBackPressed() {
+        progressBar.isVisible = false
+        set_coordinates_layout.isVisible = false
+        imageView.isVisible = false
+        set_coordiantes_button.isVisible = false
     }
 
 }
