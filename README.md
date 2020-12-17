@@ -1,12 +1,13 @@
 # Compass
 
 ## UI
+To design user interface Figma was used.
 
 ![compass](https://user-images.githubusercontent.com/48919716/102139353-082dcf80-3e5e-11eb-938b-d518db183afb.png)
 
 
 ## General 
-Compass:
+Compass functionalities:
 - displays N direction
 - asks for permission to use location
 - shows current latitude and longitude
@@ -23,6 +24,7 @@ Java.com.michalska.compass:
 - feature
 - repo
 - utils
+
 .com.michalska.compass(androidTest):
 - TO DO
 
@@ -43,6 +45,9 @@ Kotlin 1.4.21 usage
 
 ## Tests
 TO DO
+
 ## Technology stack
 - Mockito
 - Junit 4
+
+-Material Design
