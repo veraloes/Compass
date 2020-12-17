@@ -18,7 +18,7 @@ interface MainContract {
         fun runSwipeUp()
         fun loadDestination()
         fun displayDestinationLocation(latitude: String, longitude: String)
-        fun setDistance(): Float
+        fun setDistance(): Int
     }
 
     interface Presenter :
@@ -37,10 +37,10 @@ interface MainContract {
         fun handleSaveButtonClick()
         fun locationDestinationChanged(latitude: String, longitude: String)
         fun getDistanceInKm(
-            currentLatitude: Float,
-            currentLongitude: Float,
-            destinationLatitude: Float,
-            destinationLongitude: Float
-        ): Float
+            currentLatitude: Double,
+            currentLongitude: Double,
+            destinationLatitude: Double,
+            destinationLongitude: Double
+        ): Int
     }
 }

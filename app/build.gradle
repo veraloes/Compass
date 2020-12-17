@@ -31,12 +31,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-//    testOptions{
-//        unitTests.returnDefaultValues = true
-//    }
-//    sourceSets {
-//        test.java.srcDirs += 'src/test/kotlin'
-//    }
+    testOptions{
+        unitTests.returnDefaultValues = true
+    }
+    sourceSets {
+        test.java.srcDirs += 'src/test/kotlin'
+    }
 }
 
 dependencies {

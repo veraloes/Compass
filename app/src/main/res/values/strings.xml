@@ -10,8 +10,8 @@
     <string name="longitude_error">Write correct longitude</string>
     <string name="latitude_error">Write correct latitude</string>
     <string name="save_button_text">save</string>
-    <string name="current_coordinates_info_text">current coordinates</string>
-    <string name="destination_coordinates">destination coordinates</string>
+    <string name="current_coordinates_info_text">Current coordinates</string>
+    <string name="destination_coordinates">Destination coordinates</string>
     <string name="hint_latitude">52.377 N</string>
     <string name="hint_longitude">43.224 E</string>
     <string name="distance">distance</string>

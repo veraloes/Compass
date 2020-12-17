@@ -7,9 +7,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.michalska.compass.R
 import com.michalska.compass.base.BasePresenter
-import kotlin.math.atan2
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 
 class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter {
@@ -114,30 +112,26 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
         }
     }
 
-    // TODO: 16/12/2020
-    /** calculates the distance between two locations in km  */
     override fun getDistanceInKm(
-        currentLatitude: Float,
-        currentLongitude: Float,
-        destinationLatitude: Float,
-        destinationLongitude: Float
-    ): Float {
-        val earthRadius =
-            6371 // value for km
-        val dLat = Math.toRadians((destinationLatitude - currentLatitude).toDouble())
-        val dLng = Math.toRadians((destinationLongitude - currentLongitude).toDouble())
-        val sindLat = sin(dLat / 2)
-        val sindLng = sin(dLng / 2)
+        currentLatitude: Double, destinationLatitude: Double, currentLongitude: Double,
+        destinationLongitude: Double
+    ): Int {
+        val radius = 6371 // Radius of the earth
+        val latDistance = Math.toRadians(destinationLatitude - currentLatitude)
+        val lonDistance = Math.toRadians(destinationLongitude - currentLongitude)
         val a =
-            Math.pow(sindLat, 2.0) + (Math.pow(sindLng, 2.0)
-                    * Math.cos(Math.toRadians(currentLatitude.toDouble())) * Math.cos(
+            (sin(latDistance / 2) * sin(latDistance / 2)
+                    + (cos(Math.toRadians(currentLatitude)) * cos(
                 Math.toRadians(
-                    destinationLatitude.toDouble()
+                    destinationLatitude
                 )
-            ))
+            )
+                    * sin(lonDistance / 2) * sin(lonDistance / 2)))
         val c =
             2 * atan2(sqrt(a), sqrt(1 - a))
-        return earthRadius * c.toFloat() // output distance, in km
+        var distance = radius * c  // convert to km, if want m *1000
+        distance = distance.pow(2.0)
+        return sqrt(distance).roundToInt()
     }
 
     companion object {

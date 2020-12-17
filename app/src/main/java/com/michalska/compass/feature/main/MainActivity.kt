@@ -173,15 +173,15 @@ class MainActivity : AppCompatActivity(),
     }
 
     @SuppressLint("SetTextI18n")
-    override fun setDistance(): Float {
+    override fun setDistance(): Int {
         val distanceValue = presenter.getDistanceInKm(
-            currentLatitude = getCurrentLatitude().toFloat(),
-            currentLongitude = getCurrentLongitude().toFloat(),
-            destinationLatitude = getLatitudeInput().toFloat(),
-            destinationLongitude = getLongitudeInput().toFloat()
+            currentLatitude = getCurrentLatitude().toDouble(),
+            currentLongitude = getCurrentLongitude().toDouble(),
+            destinationLatitude = getLatitudeInput().toDouble(),
+            destinationLongitude = getLongitudeInput().toDouble()
         )
 
-        distance.text = "$distanceValue m"
+        distance.text = "$distanceValue km"
         distance.isVisible = true
         distance_info.isVisible = true
         return distanceValue
