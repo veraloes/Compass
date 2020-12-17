@@ -41,15 +41,27 @@ class MainActivity : AppCompatActivity(),
 
         presenter.requestPermission()
         this.sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager?
-        longitude_edit_text.addTextChangedListener { presenter.setLongitude(text1 = EditText(this)) }
-        latitude_edit_text.addTextChangedListener { presenter.setLatitude(text2 = EditText(this)) }
+        longitude_edit_text.addTextChangedListener {
+            presenter.setLongitude(
+                setLongitude = EditText(
+                    this
+                )
+            )
+        }
+        latitude_edit_text.addTextChangedListener {
+            presenter.setLatitude(
+                setLatitude = EditText(
+                    this
+                )
+            )
+        }
 
         set_coordiantes_button.setOnClickListener {
             presenter.handleButtonClick()
         }
     }
 
-    override fun showLocationError(latitudeError: String, longitudeError: String) {
+    override fun displayError(latitudeError: String, longitudeError: String) {
         this.latitude_text.text = latitudeError
         this.longitude_text.text = longitudeError
     }
@@ -74,6 +86,24 @@ class MainActivity : AppCompatActivity(),
         latitude_edit_text.error = null
     }
 
+    private fun getLatitudeInput(): String {
+        return latitude_edit_text.text.toString()
+            .substring(0, Math.min(latitude_edit_text.length(), 5))
+    }
+
+    private fun getLongitudeInput(): String {
+        return longitude_edit_text.text.toString()
+            .substring(0, Math.min(longitude_edit_text.length(), 5))
+    }
+
+    private fun getCurrentLongitude(): String {
+        return longitude_text.text.toString().substring(0, Math.min(longitude_text.length(), 5))
+    }
+
+    private fun getCurrentLatitude(): String {
+        return latitude_text.text.toString().substring(0, Math.min(latitude_text.length(), 5))
+    }
+
     override fun runSwipeUp() {
         set_coordinates_layout.isVisible = true
         val animationUp = AnimationUtils.loadAnimation(
@@ -95,9 +125,14 @@ class MainActivity : AppCompatActivity(),
         latitude_edit_text.isVisible = false
         save_coordinates_button.isVisible = false
         set_coordinates_layout.isVisible = true
-        progressBar.isVisible = true        // TODO: 14/12/2020
+        progressBar.isVisible = true
+        // TODO: 14/12/2020
         //  Need check correctness of inputed longitude and latitude values.
-        //  App ends here, because upload inputed coordinates and load destination direction and number of meters are not implemented.
+        destination_coordinates.isVisible = true
+        this.displayDestinationLocation(
+            latitude = getLatitudeInput(),
+            longitude = getLongitudeInput()
+        )
     }
 
     override fun onResume() {
@@ -132,12 +167,34 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun onGpsLocationChanged(latitude: String, longitude: String) {
-        this.latitude_text.text = "$latitude N"
-        this.longitude_text.text = "$longitude E"
+        this.latitude_text.text = "$latitude N".trim()
+        this.longitude_text.text = "$longitude E".trim()
         presenter.locationChanged(latitude, longitude)
     }
 
+    @SuppressLint("SetTextI18n")
+    override fun setDistance(): Float {
+        val distanceValue = presenter.getDistanceInKm(
+            currentLatitude = getCurrentLatitude().toFloat(),
+            currentLongitude = getCurrentLongitude().toFloat(),
+            destinationLatitude = getLatitudeInput().toFloat(),
+            destinationLongitude = getLongitudeInput().toFloat()
+        )
+
+        distance.text = "$distanceValue m"
+        distance.isVisible = true
+        distance_info.isVisible = true
+        return distanceValue
+    }
+
     override fun showUpdatedLocation(latitude: String, longitude: String) {
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun displayDestinationLocation(latitude: String, longitude: String) {
+        this.latitude_destination.text = "$latitude N"
+        this.longitude_destination.text = "$longitude E"
+        presenter.locationDestinationChanged(latitude, longitude)
     }
 
     @SuppressLint("MissingPermission")
@@ -160,7 +217,7 @@ class MainActivity : AppCompatActivity(),
         set_coordinates_layout.isVisible = false
         imageView.isVisible = false
         set_coordiantes_button.isVisible = false
+        setDistance()
     }
 
 }
-

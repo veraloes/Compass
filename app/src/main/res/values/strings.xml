@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Compass</string>
-    <string name="latitude">latitude</string>
-    <string name="longitude">longitude</string>
+    <string name="latitude">latitude N</string>
+    <string name="longitude">longitude E</string>
+    <string name="latitude_destination">destination latitude N</string>
+    <string name="longitude_destination">destination longitude E</string>
     <string name="permissionsLatitudeNeeded">Permissions are needed</string>
     <string name="permissionsLongitudeNeeded">Permissions are needed</string>
     <string name="set_destination_button">set destination coordinates</string>
@@ -9,4 +11,9 @@
     <string name="latitude_error">Write correct latitude</string>
     <string name="save_button_text">save</string>
     <string name="current_coordinates_info_text">current coordinates</string>
+    <string name="destination_coordinates">destination coordinates</string>
+    <string name="hint_latitude">52.377 N</string>
+    <string name="hint_longitude">43.224 E</string>
+    <string name="distance">distance</string>
+    <string name="distance_info">Distance to destination</string>
 </resources>

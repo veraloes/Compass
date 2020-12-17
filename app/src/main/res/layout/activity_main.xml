@@ -37,22 +37,8 @@
         android:fontFamily="@font/armata"
         android:text="@string/current_coordinates_info_text"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/compass_image" />
-
-    <TextView
-        android:id="@+id/longitude_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/armata"
-        android:text="@string/longitude"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compass_image" />
 
@@ -60,15 +46,102 @@
         android:id="@+id/latitude_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
         android:fontFamily="@font/armata"
         android:text="@string/latitude"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/compass_image" />
+
+
+    <TextView
+        android:id="@+id/longitude_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/armata"
+        android:text="@string/longitude"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compass_image" />
+
+
+    <TextView
+        android:id="@+id/destination_coordinates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/armata"
+        android:text="@string/destination_coordinates"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longitude_text" />
+
+    <TextView
+        android:id="@+id/longitude_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/armata"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/destination_coordinates" />
+
+    <TextView
+        android:id="@+id/latitude_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/armata"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/destination_coordinates" />
+
+    <TextView
+        android:id="@+id/distance_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/armata"
+        android:gravity="center"
+        android:text="@string/distance_info"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/latitude_destination" />
+
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/armata"
+        android:gravity="center"
+        android:text="@string/distance"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/distance_info" />
 
     <Button
         android:id="@+id/set_coordiantes_button"
@@ -82,7 +155,7 @@
         android:text="@string/set_destination_button"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         android:textSize="14sp"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,30 +177,32 @@
         app:layout_optimizationLevel="standard">
 
         <EditText
-            android:id="@+id/longitude_edit_text"
+            android:id="@+id/latitude_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/armata"
-            android:hint="43.224"
+            android:hint="@string/hint_latitude"
             android:inputType="numberDecimal"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
+
         <EditText
-            android:id="@+id/latitude_edit_text"
+            android:id="@+id/longitude_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/armata"
-            android:hint="52.377"
+            android:hint="@string/hint_longitude"
             android:inputType="numberDecimal"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="16sp" />
+
 
         <Button
             android:id="@+id/save_coordinates_button"

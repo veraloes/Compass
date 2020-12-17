@@ -9,7 +9,7 @@ interface MainContract {
     interface View {
         fun showUpdatedLocation(latitude: String, longitude: String)
         fun startLocation()
-        fun showLocationError(latitudeError: String, longitudeError: String)
+        fun displayError(latitudeError: String, longitudeError: String)
         fun getViewActivity(): Activity
         fun invalidLongitude()
         fun invalidLatitude()
@@ -17,6 +17,8 @@ interface MainContract {
         fun clearLatitude()
         fun runSwipeUp()
         fun loadDestination()
+        fun displayDestinationLocation(latitude: String, longitude: String)
+        fun setDistance(): Float
     }
 
     interface Presenter :
@@ -29,9 +31,16 @@ interface MainContract {
             grantResults: IntArray
         )
 
-        fun setLongitude(text1: EditText)
-        fun setLatitude(text2: EditText)
+        fun setLongitude(setLongitude: EditText)
+        fun setLatitude(setLatitude: EditText)
         fun handleButtonClick()
         fun handleSaveButtonClick()
+        fun locationDestinationChanged(latitude: String, longitude: String)
+        fun getDistanceInKm(
+            currentLatitude: Float,
+            currentLongitude: Float,
+            destinationLatitude: Float,
+            destinationLongitude: Float
+        ): Float
     }
 }
