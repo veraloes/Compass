@@ -16,7 +16,13 @@ Compass functionalities:
 - shows number of kilometres far from destination
 
 ## Responsiveness
-Tested on Nokia 6 TA-1021, 1080x1920 px (5.5") 401ppi
+Tested on:
+
+- physical devices:
+> Nokia 6 TA-1021, 1080x1920 px (5.5") 401ppi  **Android 9 (API level 28)**
+
+- emulators:
+> Pixel 3 **Android 11 (API level 30)**
 
 ## Project structure
 Java.com.michalska.compass:
