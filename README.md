@@ -56,9 +56,11 @@ Kotlin 1.4.21 usage
 TO DO
 
 ## Technology stack
+tests:
 - Mockito
 - Junit 4
 
+ui:
 - Material Design
 
 ## Possible improvements
