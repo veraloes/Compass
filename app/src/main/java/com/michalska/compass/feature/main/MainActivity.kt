@@ -10,16 +10,20 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
+import android.view.Gravity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.RotateAnimation
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.michalska.compass.R
 import com.michalska.compass.utils.LocationService
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION")
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity(),
     private var presenter = MainPresenter()
     private var sensorManager: SensorManager? = null
     private var currentDegree = 0f
+    private val progressBarHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,16 +46,21 @@ class MainActivity : AppCompatActivity(),
 
         presenter.requestPermission()
         this.sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager?
+
+        initListeners()
+    }
+
+    private fun initListeners() {
         longitude_edit_text.addTextChangedListener {
             presenter.setLongitude(
-                setLongitude = EditText(
+                longitude = EditText(
                     this
                 )
             )
         }
         latitude_edit_text.addTextChangedListener {
             presenter.setLatitude(
-                setLatitude = EditText(
+                latitude = EditText(
                     this
                 )
             )
@@ -70,6 +80,24 @@ class MainActivity : AppCompatActivity(),
         return this
     }
 
+    private fun getCurrentLongitude(): String {
+        return longitude_text.text.toString().substring(0, min(longitude_text.length(), 5))
+    }
+
+    private fun getCurrentLatitude(): String {
+        return latitude_text.text.toString().substring(0, min(latitude_text.length(), 5))
+    }
+
+    private fun getLatitudeInput(): String {
+        return latitude_edit_text.text.toString()
+            .substring(0, min(latitude_edit_text.length(), 5))
+    }
+
+    private fun getLongitudeInput(): String {
+        return longitude_edit_text.text.toString()
+            .substring(0, min(longitude_edit_text.length(), 5))
+    }
+
     override fun invalidLongitude() {
         longitude_edit_text.error = getString(R.string.longitude_error)
     }
@@ -86,24 +114,6 @@ class MainActivity : AppCompatActivity(),
         latitude_edit_text.error = null
     }
 
-    private fun getLatitudeInput(): String {
-        return latitude_edit_text.text.toString()
-            .substring(0, Math.min(latitude_edit_text.length(), 5))
-    }
-
-    private fun getLongitudeInput(): String {
-        return longitude_edit_text.text.toString()
-            .substring(0, Math.min(longitude_edit_text.length(), 5))
-    }
-
-    private fun getCurrentLongitude(): String {
-        return longitude_text.text.toString().substring(0, Math.min(longitude_text.length(), 5))
-    }
-
-    private fun getCurrentLatitude(): String {
-        return latitude_text.text.toString().substring(0, Math.min(latitude_text.length(), 5))
-    }
-
     override fun runSwipeUp() {
         set_coordinates_layout.isVisible = true
         val animationUp = AnimationUtils.loadAnimation(
@@ -116,7 +126,51 @@ class MainActivity : AppCompatActivity(),
         imageView.isVisible = true
 
         save_coordinates_button.setOnClickListener {
-            presenter.handleSaveButtonClick()
+            checkInput()
+        }
+    }
+
+    private fun invalidBothToast() {
+        val toast: Toast =
+            Toast.makeText(applicationContext, "Enter coordinates", Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, X_OFFSET, Y_OFFSET)
+        toast.show()
+    }
+
+    private fun invalidLatitudeToast() {
+        val toast: Toast =
+            Toast.makeText(applicationContext, "Enter latitude", Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, X_OFFSET, Y_OFFSET)
+        toast.show()
+    }
+
+    private fun invalidLongitudeToast() {
+        val toast: Toast =
+            Toast.makeText(applicationContext, "Enter longitude", Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, X_OFFSET, Y_OFFSET)
+        toast.show()
+    }
+
+    private fun checkInput() {
+        val inputLatitude = getLatitudeInput()
+        val inputLongitude = getLongitudeInput()
+        when {
+            inputLatitude.isEmpty() && inputLongitude.isEmpty() -> {
+                invalidBothToast()
+
+            }
+            inputLatitude.isEmpty() || inputLatitude == "." -> {
+                invalidLatitudeToast()
+
+            }
+            inputLongitude.isEmpty() || inputLongitude == "." -> {
+                invalidLongitudeToast()
+
+            }
+            else -> {
+                presenter.handleSaveButtonClick()
+
+            }
         }
     }
 
@@ -126,13 +180,14 @@ class MainActivity : AppCompatActivity(),
         save_coordinates_button.isVisible = false
         set_coordinates_layout.isVisible = true
         progressBar.isVisible = true
-        // TODO: 14/12/2020
-        //  Need check correctness of inputed longitude and latitude values.
         destination_coordinates.isVisible = true
         this.displayDestinationLocation(
             latitude = getLatitudeInput(),
             longitude = getLongitudeInput()
         )
+        progressBarHandler.postDelayed({
+            hideWindowShowInfo()
+        }, DELAY)
     }
 
     override fun onResume() {
@@ -150,9 +205,9 @@ class MainActivity : AppCompatActivity(),
             currentDegree,
             (-degree).toFloat(),
             Animation.RELATIVE_TO_SELF,
-            0.5f,
+            PIVOT_VALUE,
             Animation.RELATIVE_TO_SELF,
-            0.5f
+            PIVOT_VALUE
         )
 
         rotateCompassAnimation.duration = 200
@@ -177,8 +232,8 @@ class MainActivity : AppCompatActivity(),
         val distanceValue = presenter.getDistanceInKm(
             currentLatitude = getCurrentLatitude().toDouble(),
             currentLongitude = getCurrentLongitude().toDouble(),
-            destinationLatitude = getLatitudeInput().toDouble(),
-            destinationLongitude = getLongitudeInput().toDouble()
+            latitudeDestination = getLatitudeInput().toDouble(),
+            longitudeDestination = getLongitudeInput().toDouble()
         )
 
         distance.text = "$distanceValue km"
@@ -212,7 +267,7 @@ class MainActivity : AppCompatActivity(),
         presenter.onPermissionResult(requestCode, permissions, grantResults)
     }
 
-    override fun onBackPressed() {
+    private fun hideWindowShowInfo() {
         progressBar.isVisible = false
         set_coordinates_layout.isVisible = false
         imageView.isVisible = false
@@ -220,4 +275,12 @@ class MainActivity : AppCompatActivity(),
         setDistance()
     }
 
+    override fun onBackPressed() {}
+
+    companion object {
+        private const val DELAY: Long = 500
+        private const val PIVOT_VALUE: Float = 0.5F
+        private const val X_OFFSET: Int = 0
+        private const val Y_OFFSET: Int = 50
+    }
 }

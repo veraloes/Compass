@@ -32,6 +32,7 @@ android {
         jvmTarget = '1.8'
     }
     testOptions{
+        //that allow to mock some Android Api objects (in our case the Android Architecture Components)
         unitTests.returnDefaultValues = true
     }
     sourceSets {
@@ -52,10 +53,12 @@ dependencies {
 
     // Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.13.1'
+
     // Robolectric is a testing framework which let you test the android framework components(activity, service etc) with any emulator.
     // It's gives you control over the life cycle of components to test as well.
     testImplementation 'org.robolectric:robolectric:4.4'
     testImplementation 'androidx.test:core:1.3.0'
+
     // Optional -- Mockito framework
     // required if you want to use Mockito for unit tests
     testImplementation 'org.mockito:mockito-core:2.24.5'

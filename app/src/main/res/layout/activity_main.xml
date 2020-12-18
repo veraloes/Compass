@@ -20,16 +20,34 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/compass_image"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:padding="20dp"
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/compass"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/compass_background"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:padding="40dp"
+            app:srcCompat="@drawable/compass_background_image"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/compass_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:padding="20dp"
+            app:srcCompat="@drawable/compass_image"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/current_coordinates"
@@ -43,7 +61,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/compass_image" />
+        app:layout_constraintTop_toBottomOf="@+id/frame" />
 
     <TextView
         android:id="@+id/latitude_text"
@@ -101,7 +119,6 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/destination_coordinates" />
-
 
     <TextView
         android:id="@+id/longitude_destination"

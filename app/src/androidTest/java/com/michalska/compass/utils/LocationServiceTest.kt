@@ -2,11 +2,19 @@ package com.michalska.compass.utils
 
 import android.location.Location
 import android.location.LocationManager
+import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
 
 class GPSPollingServiceTest {
 
+    @Mock
     private val locationManager: LocationManager? = null
+
+    @Rule
+    var mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @Test
     fun testGPS() {

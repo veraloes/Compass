@@ -31,16 +31,16 @@ interface MainContract {
             grantResults: IntArray
         )
 
-        fun setLongitude(setLongitude: EditText)
-        fun setLatitude(setLatitude: EditText)
+        fun setLongitude(longitude: EditText)
+        fun setLatitude(latitude: EditText)
         fun handleButtonClick()
         fun handleSaveButtonClick()
         fun locationDestinationChanged(latitude: String, longitude: String)
         fun getDistanceInKm(
             currentLatitude: Double,
+            latitudeDestination: Double,
             currentLongitude: Double,
-            destinationLatitude: Double,
-            destinationLongitude: Double
+            longitudeDestination: Double
         ): Int
     }
 }

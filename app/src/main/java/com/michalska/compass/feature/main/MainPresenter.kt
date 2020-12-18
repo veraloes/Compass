@@ -72,14 +72,14 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
         }
     }
 
-    override fun setLongitude(setLongitude: EditText) {
-        this.longitude = setLongitude
-//        validateLongitude()
+    override fun setLongitude(longitude: EditText) {
+        this.longitude = longitude
+        validateLongitude()
     }
 
-    override fun setLatitude(setLatitude: EditText) {
-        this.longitude = setLatitude
-//        validateLatitude()
+    override fun setLatitude(latitude: EditText) {
+        this.latitude = latitude
+        validateLatitude()
     }
 
     override fun handleButtonClick() {
@@ -91,8 +91,7 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
     }
 
     private fun validateLongitude(): Boolean {
-        // TODO: 14/12/2020 function has to be change to check correctness of inputed value
-        return if (longitude?.text.toString().isEmpty()) {
+        return if (longitudeDestination.toString() == "") {
             getScreen()?.invalidLongitude()
             false
         } else {
@@ -102,8 +101,7 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
     }
 
     private fun validateLatitude(): Boolean {
-        // TODO: 14/12/2020 function has to be change to check correctness of inputed value
-        return if (latitude?.text.toString().isEmpty()) {
+        return if (latitudeDestination.toString() == "") {
             getScreen()?.invalidLatitude()
             false
         } else {
@@ -113,17 +111,17 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
     }
 
     override fun getDistanceInKm(
-        currentLatitude: Double, destinationLatitude: Double, currentLongitude: Double,
-        destinationLongitude: Double
+        currentLatitude: Double, latitudeDestination: Double, currentLongitude: Double,
+        longitudeDestination: Double
     ): Int {
         val radius = 6371 // Radius of the earth
-        val latDistance = Math.toRadians(destinationLatitude - currentLatitude)
-        val lonDistance = Math.toRadians(destinationLongitude - currentLongitude)
+        val latDistance = Math.toRadians(latitudeDestination - currentLatitude)
+        val lonDistance = Math.toRadians(longitudeDestination - currentLongitude)
         val a =
             (sin(latDistance / 2) * sin(latDistance / 2)
                     + (cos(Math.toRadians(currentLatitude)) * cos(
                 Math.toRadians(
-                    destinationLatitude
+                    longitudeDestination
                 )
             )
                     * sin(lonDistance / 2) * sin(lonDistance / 2)))
