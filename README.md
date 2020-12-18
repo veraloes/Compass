@@ -4,17 +4,18 @@
 To design user interface Figma was used.
 first version (14.12.2020) 
 ![compass](https://user-images.githubusercontent.com/48919716/102139353-082dcf80-3e5e-11eb-938b-d518db183afb.png)
-actual version (18.12.2020) in screenshot format  
+
+
+actual version (18.12.2020) in screenshots format  
 ![editedScreenshot_20201218-133207](https://user-images.githubusercontent.com/48919716/102615745-b8d5f080-4136-11eb-88f4-c6795fde3a46.png) ![editedScreenshot_20201218-133217](https://user-images.githubusercontent.com/48919716/102615746-b8d5f080-4136-11eb-8354-c5132b19a3cd.png) ![editedScreenshot_20201218-120008](https://user-images.githubusercontent.com/48919716/102615748-b96e8700-4136-11eb-99a3-ce81f6edb7ac.png)
 
 
 ## General 
 Compass functionalities:
-- displays N direction
+- displays S,E,N,W directions
 - asks for permission to use location
 - shows current latitude and longitude
 - gives ability to enter destination coordinates
-- navigates towards the location 
 - shows number of kilometres far from destination
 
 ## Responsiveness
@@ -37,7 +38,7 @@ Java.com.michalska.compass:
 - TO DO
 
 ## Project code quality
-
+> It is not perfect. To improve code quality un future: refactor MVP pattern, change variables and functions names to be more clear, add more classes.
 
 ## Project architecture
 Architecture design used - MVP 
@@ -58,4 +59,7 @@ TO DO
 - Mockito
 - Junit 4
 
--Material Design
+- Material Design
+
+## Possible improvements
+listed [here](https://github.com/veraloes/Compass/projects/2)
