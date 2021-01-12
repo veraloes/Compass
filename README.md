@@ -2,13 +2,8 @@
 
 ## UI
 To design user interface Figma was used.
-first version (14.12.2020) 
-![compass](https://user-images.githubusercontent.com/48919716/102139353-082dcf80-3e5e-11eb-938b-d518db183afb.png)
 
-
-actual version (18.12.2020) in screenshots format  
-![editedScreenshot_20201218-133207](https://user-images.githubusercontent.com/48919716/102615745-b8d5f080-4136-11eb-88f4-c6795fde3a46.png) ![editedScreenshot_20201218-133217](https://user-images.githubusercontent.com/48919716/102615746-b8d5f080-4136-11eb-8354-c5132b19a3cd.png) ![editedScreenshot_20201218-120008](https://user-images.githubusercontent.com/48919716/102615748-b96e8700-4136-11eb-99a3-ce81f6edb7ac.png)
-
+![compass-new](https://user-images.githubusercontent.com/48919716/104319096-ac984580-54e0-11eb-83cf-339ae8b02455.png)
 
 ## General 
 Compass functionalities:
