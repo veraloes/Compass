@@ -11,7 +11,6 @@ import android.hardware.SensorManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils.substring
 import android.view.Gravity
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -223,8 +222,8 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun onGpsLocationChanged(latitude: String, longitude: String) {
-        this.latitude_text.text = latitude.substring(0, min(latitude_text.length(), 9))+ " N"
-        this.longitude_text.text = longitude.substring(0, min(longitude_text.length(), 9))+ " E"
+        this.latitude_text.text = latitude.substring(0, min(latitude_text.length(), 9)) + " N"
+        this.longitude_text.text = longitude.substring(0, min(longitude_text.length(), 9)) + " E"
         presenter.locationChanged(latitude, longitude)
     }
 
