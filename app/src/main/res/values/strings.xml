@@ -16,4 +16,11 @@
     <string name="hint_longitude">43.224 E</string>
     <string name="distance">distance</string>
     <string name="distance_info">Distance to destination</string>
+    <string name="blank_coordintes">Enter coordinates</string>
+    <string name="blank_latitude">Enter latitude</string>
+    <string name="blank_longitude">Enter longitude</string>
+    <string name="kilometers"> km</string>
+    <string name="n"> N</string>
+    <string name="e">" E"</string>
+
 </resources>

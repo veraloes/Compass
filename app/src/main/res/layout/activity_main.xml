@@ -23,7 +23,7 @@
     <ImageView
         android:layout_width="0dp"
         android:layout_height="300dp"
-        android:padding="40dp"
+        android:padding="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,11 +33,23 @@
         android:id="@+id/compass_image"
         android:layout_width="0dp"
         android:layout_height="300dp"
-        android:padding="20dp"
+        android:padding="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/compass_image"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/direction"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:padding="15dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/direction"
         tools:ignore="ContentDescription" />
 
 

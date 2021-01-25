@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity(),
     private var sensorManager: SensorManager? = null
     private var currentDegree = 0f
     private val progressBarHandler = Handler()
+    private val destinationDirection = 0f
+    private val lastDestinationDirection = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -131,22 +133,34 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun invalidBothToast() {
-        val toast: Toast =
-            Toast.makeText(applicationContext, "Enter coordinates", Toast.LENGTH_SHORT)
+        val toast =
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.blank_coordintes),
+                Toast.LENGTH_SHORT
+            )
         toast.setGravity(Gravity.TOP, X_OFFSET, Y_OFFSET)
         toast.show()
     }
 
     private fun invalidLatitudeToast() {
         val toast: Toast =
-            Toast.makeText(applicationContext, "Enter latitude", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.blank_latitude),
+                Toast.LENGTH_SHORT
+            )
         toast.setGravity(Gravity.TOP, X_OFFSET, Y_OFFSET)
         toast.show()
     }
 
     private fun invalidLongitudeToast() {
         val toast: Toast =
-            Toast.makeText(applicationContext, "Enter longitude", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.blank_longitude),
+                Toast.LENGTH_SHORT
+            )
         toast.setGravity(Gravity.TOP, X_OFFSET, Y_OFFSET)
         toast.show()
     }
@@ -210,7 +224,7 @@ class MainActivity : AppCompatActivity(),
             PIVOT_VALUE
         )
 
-        rotateCompassAnimation.duration = 200
+        rotateCompassAnimation.duration = DURATION
         rotateCompassAnimation.fillAfter = true
 
         compass_image.startAnimation(rotateCompassAnimation)
@@ -222,8 +236,10 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun onGpsLocationChanged(latitude: String, longitude: String) {
-        this.latitude_text.text = latitude.substring(0, min(latitude_text.length(), 9)) + " N"
-        this.longitude_text.text = longitude.substring(0, min(longitude_text.length(), 9)) + " E"
+        this.latitude_text.text =
+            latitude.substring(0, min(latitude_text.length(), 9)) + getString(R.string.n)
+        this.longitude_text.text =
+            longitude.substring(0, min(longitude_text.length(), 9)) + getString(R.string.e)
         presenter.locationChanged(latitude, longitude)
     }
 
@@ -236,7 +252,7 @@ class MainActivity : AppCompatActivity(),
             longitudeDestination = getLongitudeInput().toDouble()
         )
 
-        distance.text = "$distanceValue km"
+        distance.text = distanceValue.toString() + getString(R.string.kilometers)
         distance.isVisible = true
         distance_info.isVisible = true
         return distanceValue
@@ -247,12 +263,11 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun displayDestinationLocation(latitude: String, longitude: String) {
-        this.latitude_destination.text = "$latitude N"
-        this.longitude_destination.text = "$longitude E"
+        this.latitude_destination.text = latitude + getString(R.string.n)
+        this.longitude_destination.text = longitude + getString(R.string.e)
         presenter.locationDestinationChanged(latitude, longitude)
     }
 
-    @SuppressLint("MissingPermission")
     override fun startLocation() {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         LocationService(this, locationManager)
@@ -282,5 +297,7 @@ class MainActivity : AppCompatActivity(),
         private const val PIVOT_VALUE: Float = 0.5F
         private const val X_OFFSET: Int = 0
         private const val Y_OFFSET: Int = 50
+        private const val DURATION: Long = 200
+
     }
 }
