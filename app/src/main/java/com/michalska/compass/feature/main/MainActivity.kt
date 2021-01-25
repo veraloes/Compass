@@ -21,8 +21,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.michalska.compass.R
+import com.michalska.compass.databinding.ActivityMainBinding
 import com.michalska.compass.utils.LocationService
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(),
     MainContract.View, SensorEventListener,
     LocationService.LocationListener {
 
+    private lateinit var binding: ActivityMainBinding
     private var presenter = MainPresenter()
     private var sensorManager: SensorManager? = null
     private var currentDegree = 0f
@@ -40,7 +41,8 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         presenter.attach(this)
 
@@ -53,14 +55,14 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun initListeners() {
-        longitude_edit_text.addTextChangedListener {
+        binding.longitudeEditText.addTextChangedListener {
             presenter.setLongitude(
                 longitude = EditText(
                     this
                 )
             )
         }
-        latitude_edit_text.addTextChangedListener {
+        binding.latitudeEditText.addTextChangedListener {
             presenter.setLatitude(
                 latitude = EditText(
                     this
@@ -68,14 +70,14 @@ class MainActivity : AppCompatActivity(),
             )
         }
 
-        set_coordiantes_button.setOnClickListener {
+        binding.setCoordiantesButton.setOnClickListener {
             presenter.handleButtonClick()
         }
     }
 
     override fun displayError(latitudeError: String, longitudeError: String) {
-        this.latitude_text.text = latitudeError
-        this.longitude_text.text = longitudeError
+        this.binding.latitudeText.text = latitudeError
+        this.binding.longitudeText.text = longitudeError
     }
 
     override fun getViewActivity(): Activity {
@@ -83,51 +85,53 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun getCurrentLongitude(): String {
-        return longitude_text.text.toString().substring(0, min(longitude_text.length(), 5))
+        return binding.longitudeText.text.toString()
+            .substring(0, min(binding.longitudeText.length(), 5))
     }
 
     private fun getCurrentLatitude(): String {
-        return latitude_text.text.toString().substring(0, min(latitude_text.length(), 5))
+        return binding.latitudeText.text.toString()
+            .substring(0, min(binding.latitudeText.length(), 5))
     }
 
     private fun getLatitudeInput(): String {
-        return latitude_edit_text.text.toString()
-            .substring(0, min(latitude_edit_text.length(), 5))
+        return binding.latitudeEditText.text.toString()
+            .substring(0, min(binding.latitudeEditText.length(), 5))
     }
 
     private fun getLongitudeInput(): String {
-        return longitude_edit_text.text.toString()
-            .substring(0, min(longitude_edit_text.length(), 5))
+        return binding.longitudeEditText.text.toString()
+            .substring(0, min(binding.longitudeEditText.length(), 5))
     }
 
     override fun invalidLongitude() {
-        longitude_edit_text.error = getString(R.string.longitude_error)
+        binding.longitudeEditText.error = getString(R.string.longitude_error)
     }
 
     override fun invalidLatitude() {
-        latitude_edit_text.error = getString(R.string.latitude_error)
+        binding.latitudeEditText.error = getString(R.string.latitude_error)
     }
 
     override fun clearLongitude() {
-        longitude_edit_text.error = null
+        binding.longitudeEditText.error = null
     }
 
     override fun clearLatitude() {
-        latitude_edit_text.error = null
+        binding.latitudeEditText.error = null
     }
 
     override fun runSwipeUp() {
-        set_coordinates_layout.isVisible = true
+        binding.setCoordinatesLayout.isVisible = true
         val animationUp = AnimationUtils.loadAnimation(
             this, R.anim.slide_up
         )
-        set_coordinates_layout.startAnimation(animationUp)
-        set_coordiantes_button.startAnimation(animationUp)
+        binding.setCoordinatesLayout.startAnimation(animationUp)
+        binding.setCoordiantesButton.startAnimation(animationUp)
 
-        set_coordiantes_button.isClickable = false
-        imageView.isVisible = true
+        binding.setCoordiantesButton.isClickable = false
+        binding.imageView.isVisible = true
 
-        save_coordinates_button.setOnClickListener {
+        binding.saveCoordinatesButton.setOnClickListener {
             checkInput()
         }
     }
@@ -189,12 +193,12 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun loadDestination() {
-        longitude_edit_text.isVisible = false
-        latitude_edit_text.isVisible = false
-        save_coordinates_button.isVisible = false
-        set_coordinates_layout.isVisible = true
-        progressBar.isVisible = true
-        destination_coordinates.isVisible = true
+        binding.longitudeEditText.isVisible = false
+        binding.latitudeEditText.isVisible = false
+        binding.saveCoordinatesButton.isVisible = false
+        binding.setCoordinatesLayout.isVisible = true
+        binding.progressBar.isVisible = true
+        binding.destinationCoordinates.isVisible = true
         this.displayDestinationLocation(
             latitude = getLatitudeInput(),
             longitude = getLongitudeInput()
@@ -227,7 +231,7 @@ class MainActivity : AppCompatActivity(),
         rotateCompassAnimation.duration = DURATION
         rotateCompassAnimation.fillAfter = true
 
-        compass_image.startAnimation(rotateCompassAnimation)
+        binding.compassImage.startAnimation(rotateCompassAnimation)
         currentDegree = (-degree).toFloat()
     }
 
@@ -236,10 +240,10 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun onGpsLocationChanged(latitude: String, longitude: String) {
-        this.latitude_text.text =
-            latitude.substring(0, min(latitude_text.length(), 9)) + getString(R.string.n)
-        this.longitude_text.text =
-            longitude.substring(0, min(longitude_text.length(), 9)) + getString(R.string.e)
+        this.binding.latitudeText.text =
+            latitude.substring(0, min(binding.latitudeText.length(), 9)) + getString(R.string.n)
+        this.binding.longitudeText.text =
+            longitude.substring(0, min(binding.longitudeText.length(), 9)) + getString(R.string.e)
         presenter.locationChanged(latitude, longitude)
     }
 
@@ -252,9 +256,9 @@ class MainActivity : AppCompatActivity(),
             longitudeDestination = getLongitudeInput().toDouble()
         )
 
-        distance.text = distanceValue.toString() + getString(R.string.kilometers)
-        distance.isVisible = true
-        distance_info.isVisible = true
+        binding.distance.text = distanceValue.toString() + getString(R.string.kilometers)
+        binding.distance.isVisible = true
+        binding.distanceInfo.isVisible = true
         return distanceValue
     }
 
@@ -263,8 +267,8 @@ class MainActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun displayDestinationLocation(latitude: String, longitude: String) {
-        this.latitude_destination.text = latitude + getString(R.string.n)
-        this.longitude_destination.text = longitude + getString(R.string.e)
+        this.binding.latitudeDestination.text = latitude + getString(R.string.n)
+        this.binding.longitudeDestination.text = longitude + getString(R.string.e)
         presenter.locationDestinationChanged(latitude, longitude)
     }
 
@@ -283,10 +287,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun hideWindowShowInfo() {
-        progressBar.isVisible = false
-        set_coordinates_layout.isVisible = false
-        imageView.isVisible = false
-        set_coordiantes_button.isVisible = false
+        binding.progressBar.isVisible = false
+        binding.setCoordinatesLayout.isVisible = false
+        binding.imageView.isVisible = false
+        binding.setCoordiantesButton.isVisible = false
         setDistance()
     }
 

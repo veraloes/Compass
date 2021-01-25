@@ -133,7 +133,7 @@ class MainPresenter : BasePresenter<MainContract.View>(), MainContract.Presenter
     }
 
     companion object {
-        const val REQUEST_LOCATION_CODE = 1
+        const val REQUEST_LOCATION_CODE: Int = 1
     }
 
 }
